@@ -9,18 +9,18 @@ const customerSchema = new Schema({
   heigth: Number,
   birthdate: Date,
   perimeters: [{
+    perDate: Date,
     perChest: Number,
     perWaist: Number,
     perHip: Number  
   }],
   skinTurgor: [{
+    skinDate: Date,
     skin1: Number,
   }], 
   objective: String,
   injuriesDiseases: String,
-  trainerId: {type: Schema.Types.ObjectId, ref:'trainer'},
-  name: String,
-  surname: String
+  trainerId: {type: Schema.Types.ObjectId, ref:'trainer'}
 }, 
 {
   timestamps: {

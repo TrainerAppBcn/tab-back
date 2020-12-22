@@ -1,9 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const createError = require("http-errors");
-const Customer = require("../models/customer");
 const Trainer = require("../models/trainer");
-const Session = require("../models/session");
 
 // [AMN] Helper functions to check that the user is or not login (check Firebase solution)
 // HELPER FUNCTIONS
@@ -13,6 +11,8 @@ const {
     isNotLoggedIn,
     validationLoggin,
 } = require("../helpers/middlewares");
+
+// <-------------- T R A I N E R   R O U T E S ---------------->
 
 // Trainer routes - CRUD (R - read the trainer by email) - receives email by query (?)
 // "/trainer?trainerEmail="
