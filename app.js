@@ -13,6 +13,7 @@ const cors = require("cors");
 // const auth = require("./routes/auth");
 const trainerRoute = require("./routes/trainer-routes");
 const customerRoute = require("./routes/customer-routes");
+const sessionRoute = require("./routes/session-routes");
 
 // MONGOOSE CONNECTION
 mongoose
@@ -69,6 +70,7 @@ app.use(express.static(path.join(__dirname, "public")));
 // app.use("/auth", auth);
 app.use("/trainer-routes", trainerRoute);
 app.use("/customer-routes", customerRoute);
+app.use("/session-routes", sessionRoute);
 
 // ERROR HANDLING
 // catch 404 and forward to error handler

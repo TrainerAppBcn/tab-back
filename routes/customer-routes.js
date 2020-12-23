@@ -29,14 +29,14 @@ router.get("/customer", /*isLoggedIn(),*/ isNotLoggedIn(), async (req, res, next
     return;
 });
 
-// Customer routes - CRUD (R - read ALL the customers that belong to the trainer trainerId) 
+// Customer routes - CRUD (R - read ALL the customers that belong to the trainer) 
 // "/customers"
 // [AMN] Temporarily I ask for isNotLoggedIn to enter in the routes (pending login)
 
-router.get("/customers/:trainerId", /*isLoggedIn(),*/ isNotLoggedIn(), async (req, res, next) => {
-    const trainerId = req.params.trainerId;
+router.get("/customers", /*isLoggedIn(),*/ isNotLoggedIn(), async (req, res, next) => {
+    
     try {
-        let customersData = await Customer.find({trainerId: trainerId});
+        let customersData = await Customer.find();
         res.status(200).json(customersData);
     } catch (error) {
         res.json(error);
@@ -53,17 +53,17 @@ router.post("/customercreate", /*isLoggedIn(),*/ isNotLoggedIn(), async (req, re
 
     try {
         let newCustomer = await Customer.create({
-                email: req.query.customerEmail,
-                name: req.body.customerName,
-                surname: req.body.customerSurname,   
-                weigth: req.body.customerWeigth,
-                heigth: req.body.customerHeigth,
-                birthdate: req.body.customerBirthdate,
-                perimeters: req.body.customerPerimeters[0], // See customer schema: this is an array of objects
-                skinTurgor: req.body.customerSkinTurgor[0], // See customer schema: this is an array of objects.
-                objective: req.body.customerObjective,
-                injuriesDiseases: req.body.customerInjDis,
-                trainerId: req.body.trainerId
+            email: req.query.customerEmail,
+            name: req.body.customerName,
+            surname: req.body.customerSurname,   
+            weigth: req.body.customerWeigth,
+            heigth: req.body.customerHeigth,
+            birthdate: req.body.customerBirthdate,
+            perimeters: req.body.customerPerimeters[0], // See customer schema: this is an array of objects
+            skinTurgor: req.body.customerSkinTurgor[0], // See customer schema: this is an array of objects.
+            objective: req.body.customerObjective,
+            injuriesDiseases: req.body.customerInjDis,
+            trainerId: req.body.trainerId
         });
         res.status(200).json(newCustomer);
     } catch (error) {
@@ -102,13 +102,14 @@ router.put("/customerupdate/:customerId", /*isLoggedIn(),*/ isNotLoggedIn(), asy
                                       skinTurgor: customerSkinTurgor,
                                       objective: customerObjective,
                                       injuriesDiseases: customerInjDis,
-                                      trainerId: trainerId }, (error, register) => {
+                                      trainerId: trainerId }, (error, register) => 
+        {
             if (error || !register) {
                 res.json({ message: `Customer with ${customerId} doesn't exists and/or error: ${error}`});
             } else {
                 res.json({ message: `Customer with ${customerId} has been updated successfully.` }); 
             }
-                                    })  
+        })  
     } catch (error) {
         res.json(error);
     }
