@@ -1,3 +1,5 @@
+'use strict';
+
 const createError = require('http-errors');
 // token confirmation (google login)
 // const { OAuth2Client } = require('google-auth-library');
