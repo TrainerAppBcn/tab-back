@@ -17,6 +17,10 @@ const trainerRoute = require("./routes/trainer-routes");
 const customerRoute = require("./routes/customer-routes");
 const sessionRoute = require("./routes/session-routes");
 
+//SEEDING
+const seeds = require('./seeds/seeds')
+const Trainer = require('./models/trainer')
+
 // MONGOOSE CONNECTION
 mongoose
   .connect(process.env.MONGODB_URI, {
@@ -25,6 +29,16 @@ mongoose
     useNewUrlParser: true,
   })
   .then(() => console.log(`Connected to database`))
+  // 	 .then(() => {
+	// 	return Trainer.deleteMany();
+	//  })
+	//  .then(() => {
+	//  	return Trainer.create(seeds);
+	//  })
+	//  .then(() =>{
+	//  	console.log('added seed to db');
+	//  	mongoose.connection.close();
+	//  })
   .catch((err) => console.error(err));
 
 // EXPRESS SERVER INSTANCE
