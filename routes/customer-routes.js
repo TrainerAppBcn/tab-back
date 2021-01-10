@@ -36,9 +36,11 @@ router.get("/customer", /*isLoggedIn(),*/ isNotLoggedIn(), async (req, res, next
 // [AMN] Temporarily I ask for isNotLoggedIn to enter in the routes (pending login)
 
 router.get("/customers", /*isLoggedIn(),*/ isNotLoggedIn(), async (req, res, next) => {
-    
+    console.log("Within customers");
     try {
+        console.log("Calling customers");
         let customersData = await Customer.find();
+        console.log(customerData);
         res.status(200).json(customersData);
     } catch (error) {
         res.json(error);
