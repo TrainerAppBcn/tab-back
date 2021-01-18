@@ -16,6 +16,27 @@ const {
 
 // <-------------- C U S T O M E R   R O U T E S ---------------->
 
+// Customer routes - CRUD (R - read ALL the customers that belong to the trainer) 
+// receives trainerId by params.
+// "/customers:trainedId"
+// [AMN] Temporarily I ask for isNotLoggedIn to enter in the routes (pending login)
+
+console.log("I'm before customers + trainerId");
+router.get("/customers/:trainerId", /*isLoggedIn(),*/ isNotLoggedIn(), async (req, res, next) => {
+    const trainerId = req.params.trainerId;
+    console.log("Within customers: ", trainerId);
+    try {
+        console.log("Calling customers");
+        let customersData = await Customer.find({trainerId: trainerId});
+        console.log("Customer data: ", customersData);
+        res.status(200).json(customersData);
+    } catch (error) {
+        res.json(error);
+    }
+    return;
+});
+
+
 // Customer routes - CRUD (R - read the customer by email) - receives email by query (?)
 // "/customer?customerEmail="
 // [AMN] Temporarily I ask for isNotLoggedIn to enter in the routes (pending login)
@@ -30,22 +51,6 @@ router.get("/customer", /*isLoggedIn(),*/ isNotLoggedIn(), async (req, res, next
     }
     return;
 });
-
-// Customer routes - CRUD (R - read ALL the customers that belong to the trainer) 
-// "/customers"
-// [AMN] Temporarily I ask for isNotLoggedIn to enter in the routes (pending login)
-
-router.get("/customers", /*isLoggedIn(),*/ isNotLoggedIn(), async (req, res, next) => {
-    
-    try {
-        let customersData = await Customer.find();
-        res.status(200).json(customersData);
-    } catch (error) {
-        res.json(error);
-    }
-    return;
-});
-
 
 // Customer routes - CRUD (C - create the customer) - receives email by query (?) and data by params
 // "/customercreate?customerEmail="
