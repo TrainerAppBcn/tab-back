@@ -60,16 +60,16 @@ router.post("/customercreate", /*isLoggedIn(),*/ isNotLoggedIn(), async (req, re
 
     try {
         let newCustomer = await Customer.create({
-            email: req.query.customerEmail,
-            name: req.body.customerName,
-            surname: req.body.customerSurname,   
-            weigth: req.body.customerWeigth,
-            heigth: req.body.customerHeigth,
-            birthdate: req.body.customerBirthdate,
-            perimeters: req.body.customerPerimeters[0], // See customer schema: this is an array of objects
-            skinTurgor: req.body.customerSkinTurgor[0], // See customer schema: this is an array of objects.
-            objective: req.body.customerObjective,
-            injuriesDiseases: req.body.customerInjDis,
+            email: req.query.email,
+            name: req.body.name,
+            surname: req.body.surname,   
+            weigth: req.body.weigth,
+            heigth: req.body.heigth,
+            birthdate: req.body.birthdate,
+            perimeters: req.body.perimeters[0], // See customer schema: this is an array of objects
+            skinTurgor: req.body.skinTurgor[0], // See customer schema: this is an array of objects.
+            objective: req.body.objective,
+            injuriesDiseases: req.body.injuriesDiseases,
             trainerId: req.body.trainerId
         });
         res.status(200).json(newCustomer);
@@ -85,30 +85,30 @@ router.post("/customercreate", /*isLoggedIn(),*/ isNotLoggedIn(), async (req, re
 
 router.put("/customerupdate/:customerId", /*isLoggedIn(),*/ isNotLoggedIn(), async (req, res, next) => {
     const customerId = req.params.customerId;
-    const { customerEmail, 
-            customerName, 
-            customerSurname,
-            customerWeigth,
-            customerHeigth,
-            customerBirthdate,
-            customerPerimeters,
-            customerSkinTurgor,
-            customerObjective,
-            customerInjDis,
-            trainerId } = req.body;
+    const { email, 
+            name, 
+            surname,
+            weigth,
+            heigth,
+            birthdate,
+            perimeters,
+            skinTurgor,
+            objective,
+            injuriesDiseases,
+            trainerId } = req.body.customerData;
 
     try {
         let customerUpdated = await Customer.findByIdAndUpdate(customerId, 
-                                    { email: customerEmail, 
-                                      name: customerName, 
-                                      surname: customerSurname,
-                                      weigth: customerWeigth,
-                                      heigth: customerHeigth,
-                                      birthdate: customerBirthdate,
-                                      perimeters: customerPerimeters,
-                                      skinTurgor: customerSkinTurgor,
-                                      objective: customerObjective,
-                                      injuriesDiseases: customerInjDis,
+                                    { email: email, 
+                                      name: name, 
+                                      surname: surname,
+                                      weigth: weigth,
+                                      heigth: heigth,
+                                      birthdate: birthdate,
+                                      perimeters: perimeters,
+                                      skinTurgor: skinTurgor,
+                                      objective: objective,
+                                      injuriesDiseases: injuriesDiseases,
                                       trainerId: trainerId }, (error, register) => 
         {
             if (error || !register) {
