@@ -20,8 +20,9 @@ const {
 // "/trainer?trainerEmail="
 // [AMN] Temporarily I ask for isNotLoggedIn to enter in the routes (pending login)
 
+console.log("Now here: ");
 router.get("/trainer", /*isLoggedIn(),*/ isNotLoggedIn(), async (req, res, next) => {
-    
+    console.log("Within trainer with email: ", req.query.trainerEmail);
     try {
         let trainerData = await Trainer.findOne({email: req.query.trainerEmail});
         res.status(200).json(trainerData);

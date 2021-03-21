@@ -52,6 +52,20 @@ router.get("/customer", /*isLoggedIn(),*/ isNotLoggedIn(), async (req, res, next
     return;
 });
 
+// Customer routes - CRUD (R - read the customer by id) - receives id by query (?)
+// "/customerget?customerId="
+// [AMN] Temporarily I ask for isNotLoggedIn to enter in the routes (pending login)
+router.get("/customerget", /*isLoggedIn(),*/ isNotLoggedIn(), async (req, res, next) => {
+    
+    try {
+        let customerData = await Customer.findOne({_id: req.query.customerId});
+        res.status(200).json(customerData);
+    } catch (error) {
+        res.json(error);
+    }
+    return;
+});
+
 // Customer routes - CRUD (C - create the customer) - receives email by query (?) and data by params
 // "/customercreate?customerEmail="
 // [AMN] Temporarily I ask for isNotLoggedIn to enter in the routes (pending login)
