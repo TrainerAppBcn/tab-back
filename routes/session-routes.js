@@ -80,12 +80,12 @@ router.post("/sessioncreate", /*isLoggedIn(),*/ isNotLoggedIn(), async (req, res
         let newSession = await Session.create({
             sessionDate: req.body.sessionDate,
             sessionTime: req.body.sessionTime,
-            effortLevel: req.body.sessionEffortLevel,
-            satisfactionLevel: req.body.sessionSatisfactionLevel,
-            isSessionPaid: req.body.sessionIsSessionPaid,
-            isSessionConfirmed: req.body.sessionIsSessionConfirmed,
-            customerId: req.body.sessionCustomerId,
-            trainerId: req.body.sessionTrainerId
+            effortLevel: req.body.effortLevel,
+            satisfactionLevel: req.body.satisfactionLevel,
+            isSessionPaid: req.body.isSessionPaid,
+            isSessionConfirmed: req.body.isSessionConfirmed,
+            customerId: req.body.customerId,
+            trainerId: req.body.trainerId
         });
         res.status(200).json(newSession);
     } catch (error) {
@@ -104,33 +104,34 @@ router.put("/sessionupdate/:sessionId", /*isLoggedIn(),*/ isNotLoggedIn(), async
 
     const { sessionDate, 
             sessionTime, 
-            sessionEffortLevel,
-            sessionSatisfactionLevel,
-            sessionIsSessionPaid,
-            sessionIsSessionConfirmed,
-            sessionCustomerId,
-            sessionTrainerId} = req.body;
-
-    try {
-        let sessionUpdated = await Session.findByIdAndUpdate(sessionId, 
-                                    { sessionDate: sessionDate,
-                                      sessionTime: sessionTime,
-                                      effortLevel: sessionEffortLevel,
-                                      satisfactionLevel: sessionSatisfactionLevel,
-                                      isSessionPaid: sessionIsSessionPaid,
-                                      isSessionConfirmed: sessionIsSessionConfirmed,
-                                      customerId: sessionCustomerId,
-                                      trainerId: sessionTrainerId }, (error, register) => 
-        {
-            if (error || !register) {
-                res.json({ message: `Session with ${sessionId} doesn't exists and/or error: ${error}`});
-            } else {
-                res.json({ message: `Session with ${sessionId} has been updated successfully.` }); 
-            }
-        })  
-    } catch (error) {
-        res.json(error);
-    }
+            effortLevel,
+            satisfactionLevel,
+            isSessionPaid,
+            isSessionConfirmed,
+            customerId,
+            trainerId} = req.body.sessionData;
+    console.log("back data: ", req.body.sessionData);
+    console.log("back id: ", sessionId);
+    // try {
+    //     let sessionUpdated = await Session.findByIdAndUpdate(sessionId, 
+    //                                 { sessionDate: sessionDate,
+    //                                   sessionTime: sessionTime,
+    //                                   effortLevel: effortLevel,
+    //                                   satisfactionLevel: satisfactionLevel,
+    //                                   isSessionPaid: isSessionPaid,
+    //                                   isSessionConfirmed: isSessionConfirmed,
+    //                                   customerId: customerId,
+    //                                   trainerId: trainerId }, (error, register) => 
+    //     {
+    //         if (error || !register) {
+    //             res.json({ message: `Session with ${sessionId} doesn't exists and/or error: ${error}`});
+    //         } else {
+    //             res.json({ message: `Session with ${sessionId} has been updated successfully.` }); 
+    //         }
+    //     })  
+    // } catch (error) {
+    //     res.json(error);
+    // }
     return;
 });
 
