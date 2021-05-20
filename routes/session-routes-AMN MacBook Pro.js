@@ -64,20 +64,6 @@ router.get("/sessionsOneCustomer/:customerId", /*isLoggedIn(),*/ isNotLoggedIn()
     return;
 });
 
-// Session routes - CRUD (R - read the session by id) - receives id by query (?)
-// "/sessionget?sessionId="
-// [AMN] Temporarily I ask for isNotLoggedIn to enter in the routes (pending login)
-router.get("/sessionget", /*isLoggedIn(),*/ isNotLoggedIn(), async (req, res, next) => {
-    console.log("Within getting session");
-    try {
-        let sessionData = await Session.findOne({_id: req.query.sessionId});
-        res.status(200).json(sessionData);
-    } catch (error) {
-        res.json(error);
-    }
-    return;
-});
-
 // Session routes - CRUD (C - create the session) - receives data by params
 // "/sessioncreate"
 // [AMN] Temporarily I ask for isNotLoggedIn to enter in the routes (pending login)
@@ -94,12 +80,12 @@ router.post("/sessioncreate", /*isLoggedIn(),*/ isNotLoggedIn(), async (req, res
         let newSession = await Session.create({
             sessionDate: req.body.sessionDate,
             sessionTime: req.body.sessionTime,
-            effortLevel: req.body.sessionEffortLevel,
-            satisfactionLevel: req.body.sessionSatisfactionLevel,
-            isSessionPaid: req.body.sessionIsSessionPaid,
-            isSessionConfirmed: req.body.sessionIsSessionConfirmed,
-            customerId: req.body.sessionCustomerId,
-            trainerId: req.body.sessionTrainerId
+            effortLevel: req.body.effortLevel,
+            satisfactionLevel: req.body.satisfactionLevel,
+            isSessionPaid: req.body.isSessionPaid,
+            isSessionConfirmed: req.body.isSessionConfirmed,
+            customerId: req.body.customerId,
+            trainerId: req.body.trainerId
         });
         res.status(200).json(newSession);
     } catch (error) {
@@ -124,32 +110,28 @@ router.put("/sessionupdate/:sessionId", /*isLoggedIn(),*/ isNotLoggedIn(), async
             isSessionConfirmed,
             customerId,
             trainerId} = req.body.sessionData;
-    console.log("On back with sessionId: ", req.params.sessionId);
-    console.log("On back with req.body: ", req.body.sessionData);
-    
-    try {
-        let sessionUpdated = await Session.findByIdAndUpdate(sessionId, 
-                                    { sessionDate: sessionDate,
-                                      sessionTime: sessionTime,
-                                      effortLevel: effortLevel,
-                                      satisfactionLevel: satisfactionLevel,
-                                      isSessionPaid: isSessionPaid,
-                                      isSessionConfirmed: isSessionConfirmed,
-                                      customerId: customerId,
-                                      trainerId: trainerId }, (error, register) => 
-        {
-            console.log("On back returns: ", res);
-            if (error || !register) {
-                res.json({ message: `Session with ${sessionId} doesn't exists and/or error: ${error}`});
-            } else {
-                res.json({ message: `Session with ${sessionId} has been updated successfully.` }); 
-            }
-        })  
-    } catch (error) {
-        console.log("on back - error: ",error)
-        res.json(error);
-    }
-    console.log("Leaving on back");
+    console.log("back data: ", req.body.sessionData);
+    console.log("back id: ", sessionId);
+    // try {
+    //     let sessionUpdated = await Session.findByIdAndUpdate(sessionId, 
+    //                                 { sessionDate: sessionDate,
+    //                                   sessionTime: sessionTime,
+    //                                   effortLevel: effortLevel,
+    //                                   satisfactionLevel: satisfactionLevel,
+    //                                   isSessionPaid: isSessionPaid,
+    //                                   isSessionConfirmed: isSessionConfirmed,
+    //                                   customerId: customerId,
+    //                                   trainerId: trainerId }, (error, register) => 
+    //     {
+    //         if (error || !register) {
+    //             res.json({ message: `Session with ${sessionId} doesn't exists and/or error: ${error}`});
+    //         } else {
+    //             res.json({ message: `Session with ${sessionId} has been updated successfully.` }); 
+    //         }
+    //     })  
+    // } catch (error) {
+    //     res.json(error);
+    // }
     return;
 });
 
